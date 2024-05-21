@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        #chat-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #chat-title {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+        #chatbox {
+            padding: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            width: fit-content;
+            max-width: 70%;
+        }
+        .message.user {
+            background-color: #007bff;
+            color: #ffffff;
+            align-self: flex-end;
+        }
+        .message.bot {
+            background-color: #e9ecef;
+            align-self: flex-start;
+        }
+        #inputBox {
+            display: flex;
+            padding: 10px;
+        }
+        #inputBox input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+        #inputBox button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #ffffff;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-title">Chatbot</div>
+        <div id="chatbox">
+            <div class="message bot">Welcome! How can I help you today?</div>
+        </div>
+        <div id="inputBox">
+            <input type="text" id="message" placeholder="Type your message here...">
+            <button id="send">Send</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#send').click(function() {
+                sendMessage();
+            });
+
+            $('#message').keypress(function(e) {
+                if (e.which == 13) { // Enter key pressed
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                var message = $('#message').val();
+                if (message.trim() === "") return;
+                
+                $('#chatbox').append('<div class="message user">' + message + '</div>');
+                $('#message').val('');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '',
+                    data: {
+                        'message': message,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        $('#chatbox').append('<div class="message bot">' + response.response + '</div>');
+                        $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
