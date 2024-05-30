@@ -1,17 +1,41 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    {% block styles %}{% endblock %}
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Chatbot{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'chatbot/styles.css' %}">
+</head>
+<body class="{% if request.COOKIES.theme == 'dark' %}dark-mode{% endif %}">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+                <li>
+                    <button id="theme-toggle">Toggle Theme</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
     {% block content %}{% endblock %}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    {% block scripts %}{% endblock %}
-  </body>
+    <script>
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const bodyClass = document.body.classList;
+            if (bodyClass.contains('dark-mode')) {
+                bodyClass.remove('dark-mode');
+                document.cookie = "theme=light; path=/";
+            } else {
+                bodyClass.add('dark-mode');
+                document.cookie = "theme=dark; path=/";
+            }
+        });
+    </script>
+</body>
 </html>

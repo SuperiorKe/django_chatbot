@@ -1,15 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from chatbot import views as chatbot_views
+from chatbot import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('chatbot.urls')),  # Include the chatbot app's URLs
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('', views.chatbot, name='home'),
+    path('profile/', views.profile, name='profile'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
 ]
-
-
-    
-
