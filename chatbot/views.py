@@ -21,6 +21,7 @@ def ask_openai(message):
     except Exception as e:
         return str(e)
 
+
 @login_required
 def chatbot(request):
     if request.method == 'POST':

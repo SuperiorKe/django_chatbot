@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from .views import chatbot
 
 urlpatterns = [
-    path("", views.chatbot, name='chatbot')
+    path('', chatbot, name='home'),  # Ensure this is defined
+    # Add other URL patterns as needed
 ]
-
