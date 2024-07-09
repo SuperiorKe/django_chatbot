@@ -21,7 +21,7 @@ A simple Django-based chatbot application with user authentication, chat history
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/django_chatbot.git
+   git clone https://github.com/SuperiorKe/django_chatbot.git
    cd django_chatbot
    ```
 
