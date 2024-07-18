@@ -18,7 +18,7 @@
             </div>
         {% endfor %}
     </div>
-    <form id="chat-form" method="post" action="{% url 'home' %}">
+    <form id="chat-form" method="post" action="{% url 'chatbot' %}">
         {% csrf_token %}
         <input type="text" name="message" id="message-input" placeholder="Type your message here..." required>
         <button type="submit">Send</button>
@@ -34,7 +34,7 @@
     document.getElementById('chat-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const messageInput = document.getElementById('message-input');
-        fetch("{% url 'home' %}", {
+        fetch("{% url 'chatbot' %}", {
             method: "POST",
             headers: {
                 "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
