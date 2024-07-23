@@ -276,6 +276,3 @@ HTML template for the chatbot interface.
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
-
-Replace `yourusername` in the Git clone URL with your actual GitHub username or the URL of your repository.
